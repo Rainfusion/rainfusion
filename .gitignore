@@ -1,0 +1,8 @@
+# Node Items
+node_modules
+package-lock.json
+build
+
+# Misc
+.env
+.vscode
