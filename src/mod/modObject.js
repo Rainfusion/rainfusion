@@ -7,30 +7,12 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import { UncontrolledCollapse, Card, CardBody, CardFooter } from 'reactstrap';
+import { Collapse, Card, CardBody, CardFooter } from 'reactstrap';
 import { Tabs, Tab } from 'react-bootstrap';
 
+import { decodeObjectDesc, filterObjectName } from './utils';
+
 // Utility Functions used by the Mod Component
-
-function filterObjectName(string) {
-    if (string !== undefined && string !== '') {
-        return string.toLowerCase().replace(/[|&;$%@"'<>()+,/-]/g, "").replace(/[0-9]/g, '').match(/\S+/g).join("_")
-    } else {
-        return 'incorrect_name'
-    }
-}
-
-function decodeObjectDesc(encoded) {
-    var decoded = "";
-
-    try {
-        decoded = atob(encoded)
-    } catch (error) {
-        decoded = "Description Not Available"
-    };
-
-    return decoded
-}
 
 function withoutDeps(decodedDescription, uuid, version, filteredName) {
     return (
@@ -47,12 +29,12 @@ function withoutDeps(decodedDescription, uuid, version, filteredName) {
                 <div className="col-md rain-download-container">
                     <div className="container-fluid row">
                         <div className="col-md-auto">
-                            <img className="rain-mod-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNBNAaMQAAAF6SURBVGhD7dYxTgNBDAXQHAk6RAMcgAoJUeQENJyAZkXNUVAOsnda5CgfbX7+eGYVB8mbKV6BM2P7RxqFzTRNqcliJrLYYhiGyYzjeBHoz3OZLLZIG+DSi7NaEFn0pA/AA153z6Eet3d7PIf3AFn0cGO1xDn+LYAaHomD8B4gi54eoFEPUNIagBdg6s5cD1BSW4AH8w8R/l7aB/eZLHqWDk4fgO9DVB9Z9EQNjuoji56owVF9ZNETNTiqz0mBH1mJGmp4cI3qYa43wLy5Rw01PcDB2QEent5caqjBYHVHUT1MD6CGzamhpgc4CA+ghrSoBVJ3TA/wsv3Ye//8OqKGKViA75dgHuYz3hNOCriw2gCgljZLFwcOUPqXBnXsmz9A6SAaf//sXLy4OtMC83iPkvUEUB+a1gBRSgFub+6PoI4vfj0B+GDtEQPfU2da8CPmvoDP4XoD8Hmm7ngwT/VS1hMAjwGFLP4ecfoA+EHIShYzkcVMZDGPafMLOH67FTQeqH8AAAAASUVORK5CYII=" alt="" />
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNBNAaMQAAAF6SURBVGhD7dYxTgNBDAXQHAk6RAMcgAoJUeQENJyAZkXNUVAOsnda5CgfbX7+eGYVB8mbKV6BM2P7RxqFzTRNqcliJrLYYhiGyYzjeBHoz3OZLLZIG+DSi7NaEFn0pA/AA153z6Eet3d7PIf3AFn0cGO1xDn+LYAaHomD8B4gi54eoFEPUNIagBdg6s5cD1BSW4AH8w8R/l7aB/eZLHqWDk4fgO9DVB9Z9EQNjuoji56owVF9ZNETNTiqz0mBH1mJGmp4cI3qYa43wLy5Rw01PcDB2QEent5caqjBYHVHUT1MD6CGzamhpgc4CA+ghrSoBVJ3TA/wsv3Ye//8OqKGKViA75dgHuYz3hNOCriw2gCgljZLFwcOUPqXBnXsmz9A6SAaf//sXLy4OtMC83iPkvUEUB+a1gBRSgFub+6PoI4vfj0B+GDtEQPfU2da8CPmvoDP4XoD8Hmm7ngwT/VS1hMAjwGFLP4ecfoA+EHIShYzkcVMZDGPafMLOH67FTQeqH8AAAAASUVORK5CYII=" alt="" />
                         </div>
 
                         <div className="col-md">
-                            <a href={process.env.REACT_APP_CDN_IP + '/download/' + uuid + "/" + filteredName + "_" + version + ".zip"}>
-                                <h2 className="rain-title rain-text-square">Download Version {version}</h2>
+                            <a href={process.env.REACT_APP_CDN_IP + '/download-mod/' + uuid + "/" + filteredName + "_" + version + ".zip"}>
+                                <h2 className="rain-title rain-text-overflow rain-text-square">Download Version {version}</h2>
                             </a>
                         </div>
                     </div>
@@ -64,14 +46,14 @@ function withoutDeps(decodedDescription, uuid, version, filteredName) {
 
 function dependencyObject(name, summary, uuid, version, filteredName) {
     return (
-        <div key={'dep' + uuid} className="container-fluid rain-deps-container-color">
+        <div key={'dep_' + uuid} className="container-fluid rain-deps-container-color">
             <div className="col-xl">
                 <h4 className="rain-text-square">{name}</h4>
                 <h5 className="rain-default-text">{summary}</h5>
                 <div className="row">
                     <div className="col-md">
-                        <a href={process.env.REACT_APP_CDN_IP + '/download/' + uuid + "/" + filteredName + "_" + version + ".zip"}>
-                            <h5 className="rain-title rain-text-square">Download Version {version}</h5>
+                        <a href={process.env.REACT_APP_CDN_IP + '/download-mod/' + uuid + "/" + filteredName + "_" + version + ".zip"}>
+                            <h5 className="rain-title rain-text-overflow rain-text-square">Download Version {version}</h5>
                         </a>
                     </div>
                 </div>
@@ -112,12 +94,12 @@ function tabsObject(decodedDescription, lengthArray, dependenciesHTML, uuid, ver
                         <div className="col-md rain-download-container">
                             <div className="container-fluid row">
                                 <div className="col-md-auto">
-                                    <img className="rain-mod-icon" src=" data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNBNAaMQAAAF6SURBVGhD7dYxTgNBDAXQHAk6RAMcgAoJUeQENJyAZkXNUVAOsnda5CgfbX7+eGYVB8mbKV6BM2P7RxqFzTRNqcliJrLYYhiGyYzjeBHoz3OZLLZIG+DSi7NaEFn0pA/AA153z6Eet3d7PIf3AFn0cGO1xDn+LYAaHomD8B4gi54eoFEPUNIagBdg6s5cD1BSW4AH8w8R/l7aB/eZLHqWDk4fgO9DVB9Z9EQNjuoji56owVF9ZNETNTiqz0mBH1mJGmp4cI3qYa43wLy5Rw01PcDB2QEent5caqjBYHVHUT1MD6CGzamhpgc4CA+ghrSoBVJ3TA/wsv3Ye//8OqKGKViA75dgHuYz3hNOCriw2gCgljZLFwcOUPqXBnXsmz9A6SAaf//sXLy4OtMC83iPkvUEUB+a1gBRSgFub+6PoI4vfj0B+GDtEQPfU2da8CPmvoDP4XoD8Hmm7ngwT/VS1hMAjwGFLP4ecfoA+EHIShYzkcVMZDGPafMLOH67FTQeqH8AAAAASUVORK5CYII=" alt="" />
+                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNBNAaMQAAAF6SURBVGhD7dYxTgNBDAXQHAk6RAMcgAoJUeQENJyAZkXNUVAOsnda5CgfbX7+eGYVB8mbKV6BM2P7RxqFzTRNqcliJrLYYhiGyYzjeBHoz3OZLLZIG+DSi7NaEFn0pA/AA153z6Eet3d7PIf3AFn0cGO1xDn+LYAaHomD8B4gi54eoFEPUNIagBdg6s5cD1BSW4AH8w8R/l7aB/eZLHqWDk4fgO9DVB9Z9EQNjuoji56owVF9ZNETNTiqz0mBH1mJGmp4cI3qYa43wLy5Rw01PcDB2QEent5caqjBYHVHUT1MD6CGzamhpgc4CA+ghrSoBVJ3TA/wsv3Ye//8OqKGKViA75dgHuYz3hNOCriw2gCgljZLFwcOUPqXBnXsmz9A6SAaf//sXLy4OtMC83iPkvUEUB+a1gBRSgFub+6PoI4vfj0B+GDtEQPfU2da8CPmvoDP4XoD8Hmm7ngwT/VS1hMAjwGFLP4ecfoA+EHIShYzkcVMZDGPafMLOH67FTQeqH8AAAAASUVORK5CYII=" alt="" />
                                 </div>
 
                                 <div className="col-md">
-                                    <a href={process.env.REACT_APP_CDN_IP + '/download/' + uuid + "/" + filteredName + "_" + version + ".zip"}>
-                                        <h2 className="rain-title rain-text-square">Download Version {version}</h2>
+                                    <a href={process.env.REACT_APP_CDN_IP + '/download-mod/' + uuid + "/" + filteredName + "_" + version + ".zip"}>
+                                        <h2 className="rain-title rain-text-overflow rain-text-square">Download Version {version}</h2>
                                     </a>
                                 </div>
                             </div>
@@ -131,15 +113,22 @@ function tabsObject(decodedDescription, lengthArray, dependenciesHTML, uuid, ver
 
 // End Utility Functions
 
-// Being RainMod Object
+// Begin RainMod Object
 
 class RainMod extends React.Component {
     constructor(props) {
         super(props);
 
+        this.toggle = this.toggle.bind(this);
+
         this.state = {
             modObject: "",
+            collapse: false,
         };
+    }
+
+    toggle() {
+        this.setState({ collapse: !this.state.collapse });
     }
 
     componentDidMount() {
@@ -197,7 +186,7 @@ class RainMod extends React.Component {
 
         return (<div className="container-fluid rounded rain-text-overflow rain-container-color">
             <div className="row mb-3">
-                <div className="col-md-auto">
+                <div className="col-auto">
                     <img className="mt-2 rain-icon" src={this.state.modObject.img_url} alt={this.state.modObject.name} />
 
                     {(() => {
@@ -209,15 +198,15 @@ class RainMod extends React.Component {
                 </div>
 
                 <div className="col-md-10">
-                    <a href="#" id={filteredName}>
-                        <h2 className="rain-title rain-text-square pt-2">{(() => {
-                            if (this.state.modObject.name !== '') {
-                                return this.state.modObject.name
-                            } else {
-                                return "Name Not Available"
-                            }
-                        })()}</h2>
-                    </a>
+
+                    <h2 className="rain-title rain-text-square pt-2" onClick={this.toggle}>{(() => {
+                        if (this.state.modObject.name !== '') {
+                            return <a id={filteredName}> {this.state.modObject.name} </a>
+                        } else {
+                            return "Name Not Available"
+                        }
+                    })()}</h2>
+
                     <h5 className="rain-default-text rain-font-15">{this.state.modObject.summary}</h5>
                     <p className="rain-text-font rain-font-10">by {(() => {
                         if (this.state.modObject.author !== '') {
@@ -227,22 +216,23 @@ class RainMod extends React.Component {
                         }
                     })()}</p>
                 </div>
+
+                {(() => {
+                    if (this.state.modObject !== null && this.state.modObject !== '') {
+                        return (<div className="container-fluid">
+                            <Collapse isOpen={this.state.collapse}>
+                                {(() => {
+                                    if (!Array.isArray(this.state.modObject.dependencies) || !this.state.modObject.dependencies.length) {
+                                        return this.generateCollapse(this.state.modObject, false)
+                                    } else {
+                                        return this.generateCollapse(this.state.modObject, true)
+                                    }
+                                })()}
+                            </Collapse>
+                        </div>)
+                    }
+                })()}
             </div>
-
-            {(() => {
-                if (this.state.modObject !== null && this.state.modObject !== '') {
-                    return (<UncontrolledCollapse style={{ marginBottom: '1rem' }} toggler={"#" + filteredName}>
-                        {(() => {
-                            if (!Array.isArray(this.state.modObject.dependencies) || !this.state.modObject.dependencies.length) {
-                                return this.generateCollapse(this.state.modObject, false)
-                            } else {
-                                return this.generateCollapse(this.state.modObject, true)
-                            }
-                        })()}
-                    </UncontrolledCollapse>)
-                }
-            })()}
-
         </div>
         )
     }
