@@ -1,167 +1,110 @@
 /*!
- * Rainfusion CSS
+ * Rainfusion CSS Version 1 Revision 2
  * Copyright 2018 The Rainfusion Project
  * Licensed under GPL-3.0
  */
 
-@font-face{
-	font-family: RiskofRainSquare;
-	src: url(../fonts/RiskofRainSquare.ttf);
+@font-face {
+    font-family: RiskofRainSquare;
+    src: url(../fonts/RiskofRainSquare.ttf);
 }
 
-@font-face{
-	font-family: RiskofRainFont;
-	src: url(../fonts/RiskofRainFont.ttf);
+@font-face {
+    font-family: RiskofRainFont;
+    src: url(../fonts/RiskofRainFont.ttf);
 }
 
-a,a:hover {
-  color: inherit;
-  text-decoration: none;
+a, a:hover {
+    color: inherit;
+    text-decoration: none;
 }
 
 body {
-  background: url(../images/background.png);
-  padding-top: 20px;
+    background: url(../images/background.png);
+    padding-top: 20px;
 }
 
 div.body {
-  background-color: #333531;
-  color: #ccc;
-  border: 32px solid transparent;
-  margin: 0 0.5% 0.5% 0.5%;
-  -webkit-border-image: url("../images/border.png") 32 repeat;
-  -o-border-image: url("../images/border.png") 32 repeat;
-  border-image: url("../images/border.png") 32 repeat;
-  width: auto;
+    background-color: #333531;
+    color: #ccc;
+    border: 32px solid transparent;
+    margin: 0 0.5% 0.5% 0.5%;
+    -webkit-border-image: url("../images/border.png") 32 repeat;
+    -o-border-image: url("../images/border.png") 32 repeat;
+    border-image: url("../images/border.png") 32 repeat;
+    width: auto;
 }
 
-.rain-category-icon {
-  position: absolute;
-  top: 0px;
-  left: 15px;
+/* Fonts */
+
+.ror-font {
+    font-family: RiskofRainFont;
+    padding-left: 2px;
+    color: white;
 }
 
-.rain-icon {
-  min-width: 100px;
-  min-height: 100px;
-  max-width: 100px;
-  max-height: 100px;
+.ror-font-square {
+    font-family: RiskofRainSquare;
+    padding-left: 2px;
+    color: white;
 }
 
-.rain-icon-small {
-  max-width: 25px;
-  max-height: 25px;
+.general-font {
+    font-family: 'Source Code Pro', monospace;
+    color: white;
 }
 
-.rain-outline:hover {
-  text-shadow: #60635e 2px 2px;
+/* General Layout */
+
+.mod-icon {
+    min-width: 100px;
+    max-width: 100px;
+    min-height: 100px;
+    max-height: 100px;
 }
 
-.rain-container-color {
-  background-color: #222321;
+.mod-category-icon {
+    position: absolute;
+    top: 0px;
+    left: 15px;
 }
 
-.rain-container-launcher {
-  background-color: #cfc355;
+.mod-download-icon {
+    min-width: 48px;
+    max-width: 48px;
+    min-height: 48px;
+    max-height: 48px;
 }
 
-.rain-container-discord {
-  background-color: #7289DA;
+.mod-title {
+    text-shadow: #60635e 2px 2px;
 }
 
-.rain-container-form {
-  background-color: #f26a67;
+.mod-desc {
+    font-size: 1rem;
 }
 
-.rain-deps-container-color {
-  background-color: #1B1C1A;
+.mod-footer {
+    font-size: 0.7rem;
 }
 
-.rain-text-overflow {
-  word-wrap: break-word;
+.mod-download {
+    font-size: 1.7rem;
 }
 
-.rain-text-title {
-  font-size: 50px;
-  text-shadow: #7D2D2F 2px 2px;
+.dep-title {
+    text-shadow: #7d2d2f 2px 2px;
 }
 
-@media (max-width: 768px) {
-  .rain-text-title {
-    font-size: 40px;
-  }
+.container-color {
+    background-color: #1B1C1A;
 }
 
-.rain-font-20 {
-  font-size: 20px;
+/* div[class^="col-"] {
+    background-color: rgba(255, 94, 0, 0.664);
 }
 
-.rain-font-15 {
-  font-size: 15px;
-}
-
-.rain-font-12 {
-  font-size: 12px;
-}
-
-.rain-font-10 {
-  font-size: 10px;
-}
-
-.rain-title:hover {
-  filter: drop-shadow(0px 0px 0.667em #bdbcbc);
-}
-
-.rain-default-text {
-  font-family: 'Source Code Pro', monospace;
-  color: white;
-}
-
-.rain-text-square {
-  font-family: RiskofRainSquare;
-  padding-left: 2px;
-  color: white;
-}
-
-.rain-text-font {
-  font-family: RiskofRainFont;
-  padding-left: 2px;
-  color:white;
-}
-
-.rain-download-container {
-  padding-left: 0px;
-  padding-right: 5px;
-}
-
-@media (max-width: 1200px) {
-  .rain-download-container {
-    padding-left: 0px;
-    padding-right: 3px;
-  }
-}
-
-@media (max-width: 992px) {
-  .rain-download-container {
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-bottom: 3px;
-  }
-}
-
-@media (max-width: 768px) {
-  .rain-download-container {
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-bottom: 3px;
-  }
-}
-
-@media (max-width: 576px) {
-  .rain-download-container {
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-bottom: 3px;
-  }
-}
-
+div[class^="container"] {
+    background-color: rgba(0, 255, 13, 0.664);
+    outline: 1px dashed rgba(0, 0, 0, 0.5);
+} */
