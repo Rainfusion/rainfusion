@@ -35,6 +35,13 @@ div.body {
     width: auto;
 }
 
+hr {
+    border: none;
+    margin-top: 0;
+    border-bottom: 2px solid #ffffff;
+    box-shadow: 0 1px 1px 0px #60635e;
+}
+
 /* Fonts */
 
 .ror-font {
@@ -55,6 +62,12 @@ div.body {
 }
 
 /* General Layout */
+
+.title {
+    text-shadow: #7d2d2f 2px 2px;
+    font-size: 3rem;
+    padding-bottom: 3px;
+}
 
 .mod-icon {
     min-width: 100px;

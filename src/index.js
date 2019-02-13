@@ -12,4 +12,4 @@ import ModDisplay from './mod/modDisplay';
 import LauncherInfo from './launcher';
 
 ReactDOM.render(<ModDisplay />, document.getElementById('mods-root'));
-//ReactDOM.render(<LauncherInfo />, document.getElementById('launcher-root'));
+ReactDOM.render(<LauncherInfo />, document.getElementById('launcher-root'));

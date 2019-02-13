@@ -66,7 +66,7 @@ class RainMod extends React.Component {
 
                     <div className="row">
                         <div className="col-sm-auto">
-                            <p className="ror-font mod-footer">by {(() => {
+                            <p className="ror-font mod-footer mod-title">by {(() => {
                                 if (this.state.modObject.author !== '') {
                                     return this.state.modObject.author
                                 } else {
@@ -75,7 +75,7 @@ class RainMod extends React.Component {
                             })()}</p>
                         </div>
                         <div className="col-sm-auto">
-                            <p className="ror-font mod-footer">Latest Version: {(() => {
+                            <p className="ror-font mod-footer mod-title">Latest Version: {(() => {
                                 if (this.state.modObject.author !== '') {
                                     return this.state.modObject.version
                                 } else {
@@ -84,7 +84,7 @@ class RainMod extends React.Component {
                             })()}</p>
                         </div>
                         <div className="col-sm">
-                            <p className="ror-font mod-footer">Last Updated: 3 Hours Ago</p>
+                            <p className="ror-font mod-footer mod-title">Last Updated: 3 Hours Ago</p>
                         </div>
                     </div>
 

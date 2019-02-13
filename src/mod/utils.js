@@ -83,6 +83,8 @@ export function generateCollapse(object, flag) {
 function generateDefault(decodedDescription, uuid, version, filteredName) {
     return (
         <Card className="border-0" style={{ backgroundColor: '#1B1C1A' }}>
+            <hr></hr>
+
             <CardBody>
                 <ReactMarkdown source={decodedDescription} />
             </CardBody>
