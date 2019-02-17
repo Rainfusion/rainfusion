@@ -9,14 +9,13 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 import RainMod from './modObject';
 
-function ModObject(uuid, name, author, img_url, summary, desc, last_update, version, item_type, dependencies) {
+function ModObject(uuid, name, author, img_url, summary, desc, version, item_type, dependencies) {
     this.uuid = uuid;
     this.name = name;
     this.author = author;
     this.img_url = img_url;
     this.summary = summary;
     this.desc = desc;
-    this.last_update = last_update;
     this.version = version;
     this.item_type = item_type;
     this.dependencies = dependencies;
@@ -48,7 +47,7 @@ class ModDisplay extends React.Component {
                     flag = true;
                 }
 
-                return new ModObject(data[key][0], data[key][1].name, data[key][1].author, data[key][1].img_url, data[key][1].summary, data[key][1].description, new Date(data[key][1].last_update).toUTCString(), data[key][1].version, data[key][1].item_type, data[key][1].dependencies);
+                return new ModObject(data[key][0], data[key][1].name, data[key][1].author, data[key][1].img_url, data[key][1].summary, data[key][1].description, data[key][1].version, data[key][1].item_type, data[key][1].dependencies);
             }
         )
 
@@ -73,7 +72,7 @@ class ModDisplay extends React.Component {
                 pageStart={0}
                 loadMore={this.getItems.bind(this)}
                 hasMore={this.state.keepLoading}
-                loader={< h1 className="rain-text-square" key="loading" > Loading Mods ... </h1>}>
+                loader={< h1 className="ror-font-square text-center" key="loading" > Loading Mods ... </h1>}>
 
                 <div id="mods">
                     {this.state.modHTML}

@@ -52,9 +52,9 @@ class RainMod extends React.Component {
                     })()}
                 </div>
 
-                <div className="col-sm m-sm-1 rounded container-color">
+                <div className="col-sm m-sm-1 rounded ror-color-1">
 
-                    <h2 className="card-title ror-font-square mod-title" onClick={this.toggle}>{(() => {
+                    <h2 className="card-title ror-font-square ror-shadow-1" onClick={this.toggle}>{(() => {
                         if (this.state.modObject.name !== '') {
                             return <a id={filteredName}> {this.state.modObject.name} </a>
                         } else {
@@ -66,7 +66,7 @@ class RainMod extends React.Component {
 
                     <div className="row">
                         <div className="col-sm-auto">
-                            <p className="ror-font mod-footer mod-title">by {(() => {
+                            <p className="ror-font mod-footer ror-shadow-3">by {(() => {
                                 if (this.state.modObject.author !== '') {
                                     return this.state.modObject.author
                                 } else {
@@ -75,7 +75,7 @@ class RainMod extends React.Component {
                             })()}</p>
                         </div>
                         <div className="col-sm-auto">
-                            <p className="ror-font mod-footer mod-title">Latest Version: {(() => {
+                            <p className="ror-font mod-footer ror-shadow-3">Latest Version: {(() => {
                                 if (this.state.modObject.author !== '') {
                                     return this.state.modObject.version
                                 } else {
@@ -84,7 +84,7 @@ class RainMod extends React.Component {
                             })()}</p>
                         </div>
                         <div className="col-sm">
-                            <p className="ror-font mod-footer mod-title">Last Updated: 3 Hours Ago</p>
+                            <p className="ror-font mod-footer ror-shadow-3">Last Updated: 3 Hours Ago</p>
                         </div>
                     </div>
 
@@ -101,6 +101,7 @@ class RainMod extends React.Component {
                             </Collapse>)
                         }
                     })()}
+
                 </div>
 
 

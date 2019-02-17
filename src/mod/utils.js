@@ -97,7 +97,7 @@ function generateDefault(decodedDescription, uuid, version, filteredName) {
 
                     <div className="col-sm">
                         <a href={process.env.REACT_APP_CDN_IP + '/download-mod/' + uuid + "/" + filteredName + "_" + version + ".zip"}>
-                            <h2 className="mt-1 mod-title ror-font-square mod-download">Download Version {version}</h2>
+                            <h2 className="mt-1 ror-shadow-1 ror-font-square mod-download">Download Version {version}</h2>
                         </a>
                     </div>
                 </div>
@@ -117,7 +117,7 @@ function dependencyObject(name, summary, uuid, version, filteredName) {
                 <div className="row">
                     <div className="col-sm">
                         <a href={process.env.REACT_APP_CDN_IP + '/download-mod/' + uuid + "/" + filteredName + "_" + version + ".zip"}>
-                            <h5 className="mod-title ror-font-square">Download Version {version}</h5>
+                            <h5 className="ror-shadow-1 ror-font-square">Download Version {version}</h5>
                         </a>
                     </div>
                 </div>
@@ -142,9 +142,9 @@ function tabsObject(decodedDescription, lengthArray, dependenciesHTML, uuid, ver
                 <Card className="border-0 mt-1" style={{ backgroundColor: '#1B1C1A' }}>
                     {(() => {
                         if (lengthArray > 1) {
-                            return (<h4 className="ror-font-square dep-title mb-3"><b>This mod requires the following dependencies to work:</b></h4>)
+                            return (<h4 className="ror-font-square ror-shadow-2 mb-3"><b>This mod requires the following dependencies to work:</b></h4>)
                         } else {
-                            return (<h4 className="ror-font-square dep-title mb-3"><b>This mod requires the following dependency to work:</b></h4>)
+                            return (<h4 className="ror-font-square ror-shadow-2 mb-3"><b>This mod requires the following dependency to work:</b></h4>)
                         }
                     })()}
 
@@ -158,7 +158,7 @@ function tabsObject(decodedDescription, lengthArray, dependenciesHTML, uuid, ver
 
                             <div className="col-sm">
                                 <a href={process.env.REACT_APP_CDN_IP + '/download-mod/' + uuid + "/" + filteredName + "_" + version + ".zip"}>
-                                    <h2 className="mt-1 mod-title ror-font-square mod-download">Download Version {version}</h2>
+                                    <h2 className="mt-1 ror-shadow-1 ror-font-square mod-download">Download Version {version}</h2>
                                 </a>
                             </div>
                         </div>

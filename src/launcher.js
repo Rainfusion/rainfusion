@@ -55,7 +55,7 @@ class DownloadIcon extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="d-none d-sm-block">
                 <div className="flex-sm-row">
                     <a href={this.state.launcherDownload}><input type="image" id="PopoverFocus" alt="download gif"
                         src={download_gif}></input></a>
@@ -207,7 +207,7 @@ class LauncherInfo extends React.Component {
         return (
             <div className="container">
                 <div>
-                    <h1 class="ror-font-square title text-center">Rainfusion</h1>
+                    <h1 class="ror-font-square ror-shadow-2 title text-center d-none d-sm-block">Rainfusion</h1>
                 </div>
 
                 <div className="d-flex flex-row justify-content-around">

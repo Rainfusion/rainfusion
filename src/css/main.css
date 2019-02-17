@@ -1,6 +1,6 @@
 /*!
  * Rainfusion CSS Version 1 Revision 2
- * Copyright 2018 The Rainfusion Project
+ * Copyright 2019 The Rainfusion Project
  * Licensed under GPL-3.0
  */
 
@@ -61,10 +61,27 @@ hr {
     color: white;
 }
 
+/* Colors and Shadows */
+
+.ror-shadow-1 {
+    text-shadow: #60635e 2px 2px;
+}
+
+.ror-shadow-2 {
+    text-shadow: #7d2d2f 2px 2px;
+}
+
+.ror-shadow-3 {
+    text-shadow: #60635e 1px 1px;
+}
+
+.ror-color-1 {
+    background-color: #1B1C1A;
+}
+
 /* General Layout */
 
 .title {
-    text-shadow: #7d2d2f 2px 2px;
     font-size: 3rem;
     padding-bottom: 3px;
 }
@@ -89,10 +106,6 @@ hr {
     max-height: 48px;
 }
 
-.mod-title {
-    text-shadow: #60635e 2px 2px;
-}
-
 .mod-desc {
     font-size: 1rem;
 }
@@ -103,14 +116,6 @@ hr {
 
 .mod-download {
     font-size: 1.7rem;
-}
-
-.dep-title {
-    text-shadow: #7d2d2f 2px 2px;
-}
-
-.container-color {
-    background-color: #1B1C1A;
 }
 
 /* div[class^="col-"] {
