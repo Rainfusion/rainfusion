@@ -20,7 +20,7 @@ export function filterObjectName(string) {
 }
 
 // Converts Base64 descriptions to Plain Text.
-export function decodeObjectDesc(encoded) {
+function decodeObjectDesc(encoded) {
     var decoded = "";
 
     try {

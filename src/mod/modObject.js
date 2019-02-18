@@ -84,7 +84,7 @@ class RainMod extends React.Component {
                             })()}</p>
                         </div>
                         <div className="col-sm">
-                            <p className="ror-font mod-footer ror-shadow-3">Last Updated: 3 Hours Ago</p>
+                            <p className="ror-font mod-footer ror-shadow-3">Last Updated: WIP</p>
                         </div>
                     </div>
 

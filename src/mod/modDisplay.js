@@ -72,13 +72,13 @@ class ModDisplay extends React.Component {
                 pageStart={0}
                 loadMore={this.getItems.bind(this)}
                 hasMore={this.state.keepLoading}
-                loader={< h1 className="ror-font-square text-center" key="loading" > Loading Mods ... </h1>}>
+                loader={<h1 className="ror-font-square text-center" key="loading"> Loading Mods ... </h1>}>
 
                 <div id="mods">
                     {this.state.modHTML}
                 </div>
 
-            </InfiniteScroll >
+            </InfiniteScroll>
         );
     }
 }

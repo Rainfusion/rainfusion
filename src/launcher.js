@@ -206,8 +206,9 @@ class LauncherInfo extends React.Component {
     render() {
         return (
             <div className="container">
-                <div>
+                <div className="d-flex flex-row justify-content-center">
                     <h1 class="ror-font-square ror-shadow-2 title text-center d-none d-sm-block">Rainfusion</h1>
+                    <h5 class="ror-font-square ror-shadow-2 d-none d-sm-block">(beta)</h5>
                 </div>
 
                 <div className="d-flex flex-row justify-content-around">
