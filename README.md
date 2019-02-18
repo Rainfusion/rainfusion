@@ -1,4 +1,4 @@
-# The Rainfusion Project
+# The Rainfusion Project - Beta Branch
 
 Rainfusion is a website that hosts mods for the game [Risk of Rain](https://riskofraingame.com/ "Risk of Rain Website").
 
