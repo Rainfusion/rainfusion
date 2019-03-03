@@ -46,11 +46,9 @@ export function generateCollapse(object, flag) {
         // Check if dependencies exist or not.
         if (flag === false) {
             // Return a tabless mod information box if object does not require any dependencies.
-            // COMPLETE: IMPROVED RESPONSIVE LAYOUT
             return generateDefault(decodedDescription, object.uuid, object.version, filteredName)
         } else if (flag === true) {
             // Moves to generating dependency information if dependencies were found.
-            // TODO: IMPROVE RESPONSIVE LAYOUT
             var dependenciesHTML = [];
 
             for (var i = 0; i < Object.keys(object.dependencies).length; i++) {
@@ -65,7 +63,6 @@ export function generateCollapse(object, flag) {
         }
     } else {
         // Returns failsafe if object failed to parse correctly.
-        // COMPLETE: IMPROVED RESPONSIVE LAYOUT
         return (<Card className="border-0" style={{ backgroundColor: '#1B1C1A' }}>
             <CardFooter className="border-0">
                 <div className="row">
@@ -79,7 +76,6 @@ export function generateCollapse(object, flag) {
 }
 
 // Generates a default description and download dropdown without dependencies.
-// COMPLETE: IMPROVED RESPONSIVE LAYOUT
 function generateDefault(decodedDescription, uuid, version, filteredName) {
     return (
         <Card className="border-0" style={{ backgroundColor: '#1B1C1A' }}>
@@ -107,10 +103,9 @@ function generateDefault(decodedDescription, uuid, version, filteredName) {
 }
 
 // Generates the HTML for a dependency from its object.
-// COMPLETE: IMPROVED RESPONSIVE LAYOUT
 function dependencyObject(name, summary, uuid, version, filteredName) {
     return (
-        <div key={'dep_' + uuid} style={{ backgroundColor: '#222321' }}>
+        <div key={'dep_' + uuid}>
             <div className="col-sm">
                 <h4 className="ror-font-square">{name}</h4>
                 <h5 className="general-text mod-desc">{summary}</h5>
@@ -127,7 +122,6 @@ function dependencyObject(name, summary, uuid, version, filteredName) {
 }
 
 // Generates the tabbing object for the different parts of the collapse.
-// COMPLETE: IMPROVED RESPONSIVE LAYOUT
 function tabsObject(decodedDescription, lengthArray, dependenciesHTML, uuid, version, filteredName) {
     return (
         <Tabs defaultActiveKey={1} id="description-download-tabs">
@@ -140,15 +134,17 @@ function tabsObject(decodedDescription, lengthArray, dependenciesHTML, uuid, ver
             </Tab>
             <Tab eventKey={2} title="Download">
                 <Card className="border-0 mt-1" style={{ backgroundColor: '#1B1C1A' }}>
-                    {(() => {
-                        if (lengthArray > 1) {
-                            return (<h4 className="ror-font-square ror-shadow-2 mb-3"><b>This mod requires the following dependencies to work:</b></h4>)
-                        } else {
-                            return (<h4 className="ror-font-square ror-shadow-2 mb-3"><b>This mod requires the following dependency to work:</b></h4>)
-                        }
-                    })()}
+                    <div className="rounded" style={{ backgroundColor: '#222321' }}>
+                        {(() => {
+                            if (lengthArray > 1) {
+                                return (<h4 className="ror-font-square ror-shadow-2 pl-3 mb-1"><b>Required dependencies:</b></h4>)
+                            } else {
+                                return (<h4 className="ror-font-square ror-shadow-2 pl-3 mb-1"><b>Required dependency:</b></h4>)
+                            }
+                        })()}
 
-                    {dependenciesHTML}
+                        {dependenciesHTML}
+                    </div>
 
                     <CardFooter className="border-0">
                         <div className="row">

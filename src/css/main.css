@@ -1,5 +1,5 @@
 /*!
- * Rainfusion CSS Version 1 Revision 2
+ * Rainfusion CSS Version 2
  * Copyright 2019 The Rainfusion Project
  * Licensed under GPL-3.0
  */
@@ -118,11 +118,8 @@ hr {
     font-size: 1.7rem;
 }
 
-/* div[class^="col-"] {
-    background-color: rgba(255, 94, 0, 0.664);
-}
+/* Misc */
 
-div[class^="container"] {
-    background-color: rgba(0, 255, 13, 0.664);
-    outline: 1px dashed rgba(0, 0, 0, 0.5);
-} */
+.ror-hover {
+    cursor: pointer;
+}

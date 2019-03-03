@@ -5,12 +5,8 @@
  */
 
 import React from 'react';
-
 import { Collapse } from 'reactstrap';
-
 import { filterObjectName, generateCollapse } from './utils';
-
-// Begin RainMod Object
 
 class RainMod extends React.Component {
     constructor(props) {
@@ -56,7 +52,7 @@ class RainMod extends React.Component {
 
                     <h2 className="card-title ror-font-square ror-shadow-1" onClick={this.toggle}>{(() => {
                         if (this.state.modObject.name !== '') {
-                            return <a id={filteredName}> {this.state.modObject.name} </a>
+                            return <a className="ror-hover" id={filteredName}> {this.state.modObject.name} </a>
                         } else {
                             return "Name Not Available"
                         }
@@ -109,7 +105,5 @@ class RainMod extends React.Component {
         )
     }
 }
-
-// End RainMod Object
 
 export default RainMod;
