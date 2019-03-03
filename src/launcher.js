@@ -194,7 +194,7 @@ class GithubIcon extends React.Component {
                         src={github_gif}></input></a>
 
                     <Popover trigger="hover" placement="auto" isOpen={this.state.popoverOpen} target="GithubPopover" toggle={this.toggle}>
-                        <PopoverBody>Contribute to the project.</PopoverBody>
+                        <PopoverBody>Contribute to the Rainfusion project.</PopoverBody>
                     </Popover>
                 </div>
             </div>
