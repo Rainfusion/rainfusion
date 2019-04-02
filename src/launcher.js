@@ -8,11 +8,11 @@ import React from 'react';
 
 import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 
-import download_gif from './images/download.gif';
-import discord_gif from './images/discord.gif';
-import github_gif from './images/github.gif';
-import submit_gif from './images/submit.gif';
-import update_gif from './images/update.gif';
+import download from './images/download.png';
+import discord from './images/discord.png';
+import docs from './images/docs.png'
+import submit from './images/upload.png';
+import update from './images/update.png';
 
 class DownloadIcon extends React.Component {
     constructor(props) {
@@ -57,10 +57,10 @@ class DownloadIcon extends React.Component {
         return (
             <div className="d-none d-sm-block">
                 <div className="flex-sm-row">
-                    <a href={this.state.launcherDownload}><input type="image" id="PopoverFocus" alt="download gif"
-                        src={download_gif}></input></a>
+                    <a href={this.state.launcherDownload}><input type="image" id="DownloadPopover" alt="download"
+                        src={download}></input></a>
 
-                    <Popover trigger="hover" placement="auto" isOpen={this.state.popoverOpen} target="PopoverFocus" toggle={this.toggle}>
+                    <Popover trigger="hover" placement="auto" isOpen={this.state.popoverOpen} target="DownloadPopover" toggle={this.toggle}>
                         <PopoverHeader>Download Modloader</PopoverHeader>
                         <PopoverBody>Latest Version: {this.state.modloaderVersion}</PopoverBody>
                     </Popover>
@@ -91,8 +91,8 @@ class SubmitIcon extends React.Component {
         return (
             <div>
                 <div className="flex-sm-row">
-                    <a href={process.env.REACT_APP_SUBMIT_URL}><input type="image" id="SubmitPopover" alt="submit gif"
-                        src={submit_gif}></input></a>
+                    <a href={process.env.REACT_APP_SUBMIT_URL}><input type="image" id="SubmitPopover" alt="submit"
+                        src={submit}></input></a>
 
                     <Popover trigger="hover" placement="auto" isOpen={this.state.popoverOpen} target="SubmitPopover" toggle={this.toggle}>
                         <PopoverBody>Submit your mod!</PopoverBody>
@@ -124,8 +124,8 @@ class UpdateIcon extends React.Component {
         return (
             <div>
                 <div className="flex-sm-row">
-                    <a href={process.env.REACT_APP_UPDATE_URL}><input type="image" id="UpdatePopover" alt="update gif"
-                        src={update_gif}></input></a>
+                    <a href={process.env.REACT_APP_UPDATE_URL}><input type="image" id="UpdatePopover" alt="update"
+                        src={update}></input></a>
 
                     <Popover trigger="hover" placement="auto" isOpen={this.state.popoverOpen} target="UpdatePopover" toggle={this.toggle}>
                         <PopoverBody>Update your mod!</PopoverBody>
@@ -157,8 +157,8 @@ class DiscordIcon extends React.Component {
         return (
             <div>
                 <div className="flex-sm-row">
-                    <a href={process.env.REACT_APP_DISCORD_URL}><input type="image" id="DiscordPopover" alt="discord gif"
-                        src={discord_gif}></input></a>
+                    <a href={process.env.REACT_APP_DISCORD_URL}><input type="image" id="DiscordPopover" alt="discord"
+                        src={discord}></input></a>
 
                     <Popover trigger="hover" placement="auto" isOpen={this.state.popoverOpen} target="DiscordPopover" toggle={this.toggle}>
                         <PopoverBody>Join the Discord</PopoverBody>
@@ -170,7 +170,7 @@ class DiscordIcon extends React.Component {
     }
 }
 
-class GithubIcon extends React.Component {
+class DocsIcon extends React.Component {
     constructor(props) {
         super(props);
 
@@ -190,11 +190,11 @@ class GithubIcon extends React.Component {
         return (
             <div>
                 <div className="flex-sm-row">
-                    <a href="https://github.com/Rainfusion/rainfusion"><input type="image" id="GithubPopover" alt="github gif"
-                        src={github_gif}></input></a>
+                    <a href={process.env.REACT_APP_DOCS_URL}><input type="image" id="DocsPopover" alt="docs"
+                        src={docs}></input></a>
 
-                    <Popover trigger="hover" placement="auto" isOpen={this.state.popoverOpen} target="GithubPopover" toggle={this.toggle}>
-                        <PopoverBody>Contribute to the Rainfusion project.</PopoverBody>
+                    <Popover trigger="hover" placement="auto" isOpen={this.state.popoverOpen} target="DocsPopover" toggle={this.toggle}>
+                        <PopoverBody>RoRML Documentation</PopoverBody>
                     </Popover>
                 </div>
             </div>
@@ -213,7 +213,7 @@ class LauncherInfo extends React.Component {
                 <div className="d-flex flex-row justify-content-around">
                     <DownloadIcon />
                     <SubmitIcon />
-                    <GithubIcon />
+                    <DocsIcon />
                     <UpdateIcon />
                     <DiscordIcon />
                 </div >

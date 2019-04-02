@@ -49,5 +49,5 @@ Licenses for the fonts used can be found in their corresponding directories in t
 ## Acknowledgments
 
 * Saturnyoshi for creating RoR Modloader and helping out with aesthetics.
-* Uziskull for creating the icons for the information launcher.
+* Uziskull and Saturnyoshi for creating the icons for the information launcher.
 
