@@ -7,6 +7,7 @@
 import React from 'react';
 import { Collapse } from 'reactstrap';
 import { filterObjectName, generateCollapse } from './utils';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 class RainMod extends React.Component {
     constructor(props) {
@@ -80,7 +81,11 @@ class RainMod extends React.Component {
                             })()}</p>
                         </div>
                         <div className="col-sm">
-                            <p className="ror-font mod-footer ror-shadow-3">Last Updated: WIP</p>
+                            <p className="ror-font mod-footer ror-shadow-3 ror-hover">
+                                <CopyToClipboard text={this.state.modObject.uuid}>
+                                    <span>Copy UUID</span>
+                                </CopyToClipboard>
+                            </p>
                         </div>
                     </div>
 
