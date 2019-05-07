@@ -13,7 +13,7 @@ import { Tabs, Tab } from 'react-bootstrap';
 // Filters mod names using regex for parsing.
 export function filterObjectName(string) {
     if (string !== undefined && string !== '') {
-        return string.toLowerCase().replace(/[|&;$%@"'#<>()+,/-]/g, "").replace(/[0-9]/g, '').match(/\S+/g).join("_")
+        return string.toLowerCase().replace(/[|&;$%@"'#:<>()+,/-]/g, "").replace(/[0-9]/g, '').match(/\S+/g).join("_")
     } else {
         return 'incorrect_name'
     }
