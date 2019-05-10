@@ -9,16 +9,16 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 import RainMod from './modObject';
 
-function ModObject(uuid, name, author, img_url, summary, desc, version, item_type, dependencies) {
+function ModObject(uuid, name, author, summary, desc, version, item_type, dependencies, tags) {
     this.uuid = uuid;
     this.name = name;
     this.author = author;
-    this.img_url = img_url;
     this.summary = summary;
     this.desc = desc;
     this.version = version;
     this.item_type = item_type;
     this.dependencies = dependencies;
+    this.tags = tags;
 }
 
 class ModDisplay extends React.Component {
@@ -33,30 +33,79 @@ class ModDisplay extends React.Component {
         }
     }
 
-    getItems = async (pagedata) => {
+    getDependency = async (uuid, version) => {
+        const request = new Request(process.env.REACT_APP_CDN_IP + '/api/mod/' + uuid, {
+            method: 'GET',
+            headers: {
+                "Origin": process.env.REACT_APP_ORIGIN_URL
+            },
+            mode: 'cors',
+            cache: 'default'
+        });
 
-        const request = new Request(process.env.REACT_APP_CDN_IP + '/api/mods?count=' + pagedata, { method: 'GET', headers: { "Origin": process.env.REACT_APP_ORIGIN_URL }, mode: 'cors', cache: 'default' });
+        const response = await fetch(request);
+
+        if (response.status === 404) {
+            return "";
+        } else {
+            var object = await response.json();
+            return new ModObject(object[0], object[1].name, object[1].author, object[1].summary, object[1].description, version, object[1].item_type, object[1].dependencies, object[1].tags)
+        }
+    }
+
+    getItems = async (pagedata) => {
+        const request = new Request(process.env.REACT_APP_CDN_IP + '/api/mods?count=' + pagedata, {
+            method: 'GET',
+            headers: {
+                "Origin": process.env.REACT_APP_ORIGIN_URL
+            },
+            mode: 'cors',
+            cache: 'default'
+        });
+
         const response = await fetch(request);
         const data = await response.json();
-
         var flag = false;
 
-        var modObjects = Object.keys(data).map(
-            key => {
-                if (data[key][0] === "EOD") {
-                    flag = true;
-                }
-
-                return new ModObject(data[key][0], data[key][1].name, data[key][1].author, data[key][1].img_url, data[key][1].summary, data[key][1].description, data[key][1].version, data[key][1].item_type, data[key][1].dependencies);
+        var modObjects = Object.keys(data).map(async (key) => {
+            if (data[key][0] === "00000000-0000-0000-0000-000000000000") {
+                flag = true;
             }
-        )
+
+            var mod = new ModObject(data[key][0], data[key][1].name, data[key][1].author, data[key][1].summary, data[key][1].description, data[key][1].version, data[key][1].item_type, data[key][1].dependencies, data[key][1].tags);
+
+            if (data[key][0] !== "00000000-0000-0000-0000-000000000000") {
+                for (let index = 0; index < mod.dependencies.length; index++) {
+                    const element = mod.dependencies[index];
+                    const version = mod.dependencies[index][1].version;
+                    var temp = await this.getDependency(element[0], version);
+
+                    if (temp === "") {
+                        mod.dependencies = [];
+                    } else {
+                        mod.dependencies = [];
+                        mod.dependencies.push(temp);
+                    }
+                }
+            }
+
+            return mod;
+        })
+
+        var objects = await modObjects;
+        var temp = [];
+
+        for (let index = 0; index < objects.length; index++) {
+            const element = await objects[index];
+            temp.push(element);
+        }
 
         if (flag) {
-            modObjects.pop();
-            this.setState({ modTable: modObjects });
+            temp.pop();
+            this.setState({ modTable: temp });
             this.setState({ keepLoading: false });
         } else {
-            this.setState({ modTable: modObjects });
+            this.setState({ modTable: temp });
         }
     }
 

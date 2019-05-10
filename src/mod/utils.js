@@ -55,7 +55,7 @@ export function generateCollapse(object, flag) {
                 var filteredDName = filterObjectName(object.dependencies[i].name);
 
                 dependenciesHTML.push(dependencyObject(object.dependencies[i].name,
-                    object.dependencies[i].summary, object.dependencies[i].id, object.dependencies[i].version,
+                    object.dependencies[i].summary, object.dependencies[i].uuid, object.dependencies[i].version,
                     filteredDName))
             }
 
