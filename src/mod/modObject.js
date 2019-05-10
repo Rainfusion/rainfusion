@@ -35,11 +35,16 @@ class RainMod extends React.Component {
 
     render() {
         var filteredName = filterObjectName(this.state.modObject.name);
+        var imageURL = "";
+
+        if (this.state.modObject.uuid !== undefined) {
+            imageURL = process.env.REACT_APP_CDN_IP + '/mod-icon/' + this.state.modObject.uuid + '/';
+        }
 
         return (
             <div className="card flex-sm-row mb-2" style={{ backgroundColor: '#222321' }}>
                 <div className="col-sm-auto mt-2 mb-2">
-                    <img className="mod-icon" src={process.env.REACT_APP_CDN_IP + '/mod-icon/' + this.state.modObject.uuid + '/'} alt={this.state.modObject.name} />
+                    <img className="mod-icon" src={imageURL} alt={this.state.modObject.name} />
 
                     {(() => {
                         if (this.state.modObject.item_type === "Library") {

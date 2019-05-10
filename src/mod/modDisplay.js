@@ -78,7 +78,13 @@ class ModDisplay extends React.Component {
                 for (let index = 0; index < mod.dependencies.length; index++) {
                     const element = mod.dependencies[index];
                     const version = mod.dependencies[index][1].version;
-                    var temp = await this.getDependency(element[0], version);
+                    var temp = "";
+
+                    if (mod.dependencies === null) {
+                        temp = ""
+                    } else {
+                        temp = await this.getDependency(element[0], version);
+                    }
 
                     if (temp === "") {
                         mod.dependencies = [];
