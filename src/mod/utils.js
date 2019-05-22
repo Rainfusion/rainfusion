@@ -19,6 +19,11 @@ export function filterObjectName(string) {
     }
 }
 
+// Joins tags together with the seperator ";" and base64 encodes it.
+export function joinTags(tags) {
+    return btoa(tags.join(";"))
+}
+
 // Converts Base64 descriptions to Plain Text.
 function decodeObjectDesc(encoded) {
     var decoded = "";
@@ -30,6 +35,32 @@ function decodeObjectDesc(encoded) {
     };
 
     return decoded
+}
+
+// Generates the tags object for the mod object.
+export function generateTags(tags) {
+    function tagsObject(tag) {
+        return (
+            <div className="col-sm-auto rounded mod-tag text-center mb-2 mb-md-0" style={{ backgroundColor: '#222321' }}>
+                <span className="ror-font mod-footer ror-shadow-3">{tag}</span>
+            </div>
+        )
+    }
+
+    var tagsHTML = [];
+
+    for (let index = 0; index < tags.length; index++) {
+        const element = tags[index];
+        tagsHTML.push(tagsObject(element));
+    }
+
+    return (
+        <div className="w-auto">
+            <div className="d-flex flex-row flex-wrap mb-2">
+                {tagsHTML}
+            </div>
+        </div>
+    )
 }
 
 // Generates the full collapse for the mod object.

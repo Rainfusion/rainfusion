@@ -8,6 +8,7 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import RainMod from './modObject';
+import { joinTags } from './utils';
 
 function ModObject(uuid, name, author, summary, desc, version, item_type, dependencies, tags) {
     this.uuid = uuid;
@@ -29,6 +30,7 @@ class ModDisplay extends React.Component {
         this.state = {
             modTable: [],
             modHTML: [],
+            tags: [],
             keepLoading: true,
         }
     }
@@ -54,14 +56,27 @@ class ModDisplay extends React.Component {
     }
 
     getItems = async (pagedata) => {
-        const request = new Request(process.env.REACT_APP_CDN_IP + '/api/mods?count=' + pagedata, {
-            method: 'GET',
-            headers: {
-                "Origin": process.env.REACT_APP_ORIGIN_URL
-            },
-            mode: 'cors',
-            cache: 'default'
-        });
+        var request = "";
+
+        if (this.state.tags.length > 0) {
+            request = new Request(process.env.REACT_APP_CDN_IP + '/api/mods?count=' + pagedata + '&sort=' + joinTags(this.state.tags), {
+                method: 'GET',
+                headers: {
+                    "Origin": process.env.REACT_APP_ORIGIN_URL
+                },
+                mode: 'cors',
+                cache: 'default'
+            });
+        } else {
+            request = new Request(process.env.REACT_APP_CDN_IP + '/api/mods?count=' + pagedata, {
+                method: 'GET',
+                headers: {
+                    "Origin": process.env.REACT_APP_ORIGIN_URL
+                },
+                mode: 'cors',
+                cache: 'default'
+            });
+        }
 
         const response = await fetch(request);
         const data = await response.json();
