@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { Collapse } from 'reactstrap';
-import { filterObjectName, generateCollapse } from './utils';
+import { filterObjectName, generateCollapse, generateTags } from './utils';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 class RainMod extends React.Component {
@@ -93,6 +93,12 @@ class RainMod extends React.Component {
                             </p>
                         </div>
                     </div>
+
+                    {(() => {
+                        if (this.state.modObject.tags !== undefined) {
+                            return generateTags(this.state.modObject.tags)
+                        }
+                    })()}
 
                     {(() => {
                         if (this.state.modObject !== null && this.state.modObject !== '') {
