@@ -118,6 +118,11 @@ hr {
     font-size: 1.7rem;
 }
 
+.mod-tag {
+    max-width: 150px;
+    margin-right: 5px;
+}
+
 /* Misc */
 
 .ror-hover {
