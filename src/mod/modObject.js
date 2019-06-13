@@ -95,7 +95,7 @@ class RainMod extends React.Component {
                     </div>
 
                     {(() => {
-                        if (this.state.modObject.tags !== undefined) {
+                        if (this.state.modObject.tags !== undefined && this.state.modObject.tags !== null) {
                             return generateTags(this.state.modObject.tags)
                         }
                     })()}
