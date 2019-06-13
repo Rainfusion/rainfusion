@@ -1,14 +1,11 @@
 {
   "name": "rainfusion",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "private": true,
   "dependencies": {
+    "html-react-parser": "^0.7.1",
     "react": "^16.8.6",
-    "react-bootstrap": "^1.0.0-beta.8",
-    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
-    "react-infinite-scroller": "^1.2.4",
-    "react-markdown": "^4.0.8",
     "react-scripts": "^3.0.0",
     "reactstrap": "^8.0.0"
   },
