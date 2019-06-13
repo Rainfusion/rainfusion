@@ -1,4 +1,4 @@
-# The Rainfusion Project
+# The Rainfusion Project - Server Sided Rendering
 
 Rainfusion is a website that hosts mods for the game [Risk of Rain](https://riskofraingame.com/ "Risk of Rain Website").
 
@@ -50,4 +50,3 @@ Licenses for the fonts used can be found in their corresponding directories in t
 
 * Saturnyoshi for creating RoR Modloader and helping out with aesthetics.
 * Uziskull and Saturnyoshi for creating the icons for the information launcher.
-
