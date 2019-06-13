@@ -8,7 +8,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/main.css';
 
-import ModDisplay from './mod/modDisplay';
+import ModDisplay from './modDisplay';
 import LauncherInfo from './launcher';
 
 ReactDOM.render(<ModDisplay />, document.getElementById('mods-root'));
