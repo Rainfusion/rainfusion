@@ -8,6 +8,7 @@ build
 .vscode
 
 # Rust
+pkg
 /target
 **/*.rs.bk
 Cargo.lock
