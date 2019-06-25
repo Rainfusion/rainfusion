@@ -22,7 +22,6 @@ wasm-bindgen-futures = "0.3"
 futures = "0.1"
 js-sys = "0.3"
 wee_alloc = { version = "0.4", optional = true }
-base64 = "0.10"
 dotenv_codegen = "0.14"
 
 [dependencies.web-sys]

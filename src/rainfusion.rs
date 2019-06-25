@@ -51,9 +51,7 @@ impl Rainfusion {
             .and_then(|textv: Promise| JsFuture::from(textv))
             .and_then(|text| {
                 // Decode the response
-                let decoded = base64::decode(&text.as_string().unwrap()).unwrap();
-                let constructed = std::str::from_utf8(&decoded).unwrap();
-                future::ok(JsValue::from(constructed.to_string()))
+                future::ok(text)
             })
             .map_err(|err| {
                 let js_error = Error::new(&format!("{:?}", err));
