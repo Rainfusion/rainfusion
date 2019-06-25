@@ -1,5 +1,5 @@
 //! rainfusion
-//! 
+//!
 //! The WASM frontend for the Rainfusion website.
 //! This website uses WASM to load server sided rendered objects.
 
@@ -20,6 +20,9 @@ pub fn run() -> Result<(), JsValue> {
 
     // Setup Variables
     let window = web_sys::window().expect("Error finding window.");
+    let document = window
+        .document()
+        .expect("Error finding document on the window");
     let rainfusion = Rainfusion::new();
 
     // Mod HTML Callback
@@ -34,6 +37,10 @@ pub fn run() -> Result<(), JsValue> {
         let mod_element = document.get_element_by_id("mods-root").unwrap();
         mod_element.set_inner_html(&x.as_string().unwrap());
     }) as Box<FnMut(JsValue)>);
+
+    // Mod Loading Text
+    let mod_element = document.get_element_by_id("mods-root").unwrap();
+    mod_element.set_inner_html(r#"<h1 class="ror-font-square text-center"> Loading Mods </h1>"#);
 
     // Call for HTML from CDN
     rainfusion.rainfusion_html(mod_callback).unwrap();
