@@ -2,7 +2,7 @@
 //! CDN provided by the .env file in the root directory of this project.
 use dotenv_codegen::dotenv;
 use futures::{future, Future};
-use js_sys::Promise;
+use js_sys::{Error, Promise};
 use wasm_bindgen::{prelude::*, JsCast};
 use wasm_bindgen_futures::{future_to_promise, JsFuture};
 use web_sys::{Document, Request, RequestInit, RequestMode, Response, Window};
@@ -24,7 +24,11 @@ impl Rainfusion {
     }
 
     /// Get rendered HTML from CDN
-    pub fn rainfusion_html(&self, callback: Closure<FnMut(JsValue)>) -> Result<(), JsValue> {
+    pub fn rainfusion_html(
+        &self,
+        ok_callback: Closure<FnMut(JsValue)>,
+        err_callback: Closure<FnMut(JsValue)>,
+    ) -> Result<(), JsValue> {
         // Construct Request Options.
         let mut opts = RequestInit::new();
         opts.method("GET");
@@ -46,20 +50,25 @@ impl Rainfusion {
             })
             .and_then(|textv: Promise| JsFuture::from(textv))
             .and_then(|text| {
-                // Decode the response and convert it into a string.
+                // Decode the response
                 let decoded = base64::decode(&text.as_string().unwrap()).unwrap();
                 let constructed = std::str::from_utf8(&decoded).unwrap();
                 future::ok(JsValue::from(constructed.to_string()))
+            })
+            .map_err(|err| {
+                let js_error = Error::new(&format!("{:?}", err));
+                JsValue::from(js_error)
             });
 
         // Convert the Rust future to a JS promise.
         let promise = future_to_promise(future);
 
         // Handle Promise with callback.
-        promise.then(&callback);
+        promise.then(&ok_callback).catch(&err_callback);
 
-        // Forget the callback.
-        callback.forget();
+        // Forget the callbacks.
+        ok_callback.forget();
+        err_callback.forget();
 
         Ok(())
     }
@@ -67,8 +76,12 @@ impl Rainfusion {
     /// Modify the Launcher
     pub fn rainfusion_launcher(&self) -> Result<(), JsValue> {
         // Get Download Icon
-        let launcher_download = self.document.get_element_by_id("launcher-download").unwrap();
-        launcher_download.set_attribute("href", &format!("{}/launcher-download", dotenv!("CDN_IP")))?;
+        let launcher_download = self
+            .document
+            .get_element_by_id("launcher-download")
+            .unwrap();
+        launcher_download
+            .set_attribute("href", &format!("{}/launcher-download", dotenv!("CDN_IP")))?;
 
         // Get Submit Icon
         let launcher_submit = self.document.get_element_by_id("launcher-submit").unwrap();

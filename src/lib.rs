@@ -25,8 +25,8 @@ pub fn run() -> Result<(), JsValue> {
         .expect("Error finding document on the window");
     let rainfusion = Rainfusion::new();
 
-    // Mod HTML Callback
-    let mod_callback = Closure::wrap(Box::new(|x: JsValue| {
+    // Mod HTML Callbacks
+    let ok_mod_callback = Closure::wrap(Box::new(|x: JsValue| {
         // Get Window and Document
         let window = web_sys::window().expect("Error finding window");
         let document = window
@@ -38,15 +38,27 @@ pub fn run() -> Result<(), JsValue> {
         mod_element.set_inner_html(&x.as_string().unwrap());
     }) as Box<FnMut(JsValue)>);
 
+    let err_mod_callback = Closure::wrap(Box::new(|_| {
+        // Get Window and Document
+        let window = web_sys::window().expect("Error finding window");
+        let document = window
+            .document()
+            .expect("Error finding document on the window");
+
+        // Get mod element
+        let mod_element = document.get_element_by_id("mods-root").unwrap();
+        mod_element.set_inner_html(r#"<h1 class="ror-font-square text-center"> Server Sided Rendering Failure (404) </h1>"#);
+    }) as Box<FnMut(JsValue)>);
+
     // Modify Launcher
-    rainfusion.rainfusion_launcher().unwrap();
+    rainfusion.rainfusion_launcher()?;
 
     // Mod Loading Text
     let mod_element = document.get_element_by_id("mods-root").unwrap();
     mod_element.set_inner_html(r#"<h1 class="ror-font-square text-center"> Loading Mods </h1>"#);
 
     // Call for HTML from CDN
-    rainfusion.rainfusion_html(mod_callback).unwrap();
+    rainfusion.rainfusion_html(ok_mod_callback, err_mod_callback)?;
 
     Ok(())
 }
