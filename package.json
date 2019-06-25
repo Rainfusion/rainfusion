@@ -1,9 +1,19 @@
 {
   "name": "rainfusion",
+  "author": "FrictionlessPortals <8077147+FrictionlessPortals@users.noreply.github.com>",
   "version": "3.0.0",
   "private": true,
   "scripts": {
-    "start": "",
-    "build": ""
+    "build": "rimraf dist pkg && webpack",
+    "start": "rimraf dist pkg && webpack-dev-server --open -d",
+    "test": "cargo test && wasm-pack test --headless"
+  },
+  "devDependencies": {
+    "@wasm-tool/wasm-pack-plugin": "^0.4.2",
+    "copy-webpack-plugin": "^5.0.3",
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2",
+    "rimraf": "^2.6.3"
   }
 }
