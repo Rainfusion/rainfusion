@@ -1,7 +1,44 @@
 [package]
 name = "rainfusion"
+description = "The WASM frontend for Rainfusion website."
 version = "0.1.0"
 authors = ["FrictionlessPortals <8077147+FrictionlessPortals@users.noreply.github.com>"]
+categories = ["wasm"]
+readme = "README.md"
 edition = "2018"
 
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+lto = true
+
+[features]
+default = ["wee_alloc"]
+
 [dependencies]
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.3"
+futures = "0.1"
+js-sys = "0.3"
+wee_alloc = { version = "0.4", optional = true }
+base64 = "0.10"
+
+[dependencies.web-sys]
+version = "0.3"
+features = [
+    'Document',
+    'Element',
+    'HtmlElement',
+    'Node',
+    'Window',
+    'console',
+    'Headers',
+    'Request',
+    'RequestInit',
+    'RequestMode',
+    'Response',
+]
+
+[target."cfg(debug_assertions)".dependencies]
+console_error_panic_hook = "0.1"
