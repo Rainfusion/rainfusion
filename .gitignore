@@ -6,3 +6,8 @@ build
 # Misc
 .env
 .vscode
+
+# Rust
+/target
+**/*.rs.bk
+Cargo.lock

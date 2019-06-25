@@ -1,0 +1,7 @@
+[package]
+name = "rainfusion"
+version = "0.1.0"
+authors = ["FrictionlessPortals <8077147+FrictionlessPortals@users.noreply.github.com>"]
+edition = "2018"
+
+[dependencies]
