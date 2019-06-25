@@ -137,6 +137,10 @@ hr {
     cursor: pointer;
 }
 
+.ror-outline {
+    outline: none;
+}
+
 .nav-link.active {
     font-family: RiskofRainSquare;
     font-size: 16px;
