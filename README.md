@@ -17,7 +17,7 @@ You will need to have these installed before setting the environment up.
 
 ```
 NodeJS: Version 10 or above
-Rust: 1.30.0 or later with ``wasm-pack``
+Rust: 1.30.0 or later with wasm-pack
 ```
 
 ### Installing
