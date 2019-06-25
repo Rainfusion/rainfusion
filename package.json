@@ -2,21 +2,8 @@
   "name": "rainfusion",
   "version": "3.0.0",
   "private": true,
-  "dependencies": {
-    "html-react-parser": "^0.7.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "^3.0.0",
-    "reactstrap": "^8.0.0"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+    "start": "",
+    "build": ""
+  }
 }
