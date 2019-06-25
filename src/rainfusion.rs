@@ -63,4 +63,29 @@ impl Rainfusion {
 
         Ok(())
     }
+
+    /// Modify the Launcher
+    pub fn rainfusion_launcher(&self) -> Result<(), JsValue> {
+        // Get Download Icon
+        let launcher_download = self.document.get_element_by_id("launcher-download").unwrap();
+        launcher_download.set_attribute("href", &format!("{}/launcher-download", dotenv!("CDN_IP")))?;
+
+        // Get Submit Icon
+        let launcher_submit = self.document.get_element_by_id("launcher-submit").unwrap();
+        launcher_submit.set_attribute("href", dotenv!("SUBMIT_URL"))?;
+
+        // Get Docs Icon
+        let launcher_docs = self.document.get_element_by_id("launcher-docs").unwrap();
+        launcher_docs.set_attribute("href", dotenv!("DOCS_URL"))?;
+
+        // Get Update Icon
+        let launcher_update = self.document.get_element_by_id("launcher-update").unwrap();
+        launcher_update.set_attribute("href", dotenv!("UPDATE_URL"))?;
+
+        // Get Update Icon
+        let launcher_discord = self.document.get_element_by_id("launcher-discord").unwrap();
+        launcher_discord.set_attribute("href", dotenv!("DISCORD_URL"))?;
+
+        Ok(())
+    }
 }

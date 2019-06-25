@@ -38,6 +38,9 @@ pub fn run() -> Result<(), JsValue> {
         mod_element.set_inner_html(&x.as_string().unwrap());
     }) as Box<FnMut(JsValue)>);
 
+    // Modify Launcher
+    rainfusion.rainfusion_launcher().unwrap();
+
     // Mod Loading Text
     let mod_element = document.get_element_by_id("mods-root").unwrap();
     mod_element.set_inner_html(r#"<h1 class="ror-font-square text-center"> Loading Mods </h1>"#);

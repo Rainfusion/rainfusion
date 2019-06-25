@@ -90,6 +90,10 @@ hr {
     padding-bottom: 3px;
 }
 
+.launcher-desc {
+    font-size: 1rem;
+}
+
 .mod-icon {
     min-width: 100px;
     max-width: 100px;
@@ -131,4 +135,14 @@ hr {
 
 .ror-hover {
     cursor: pointer;
+}
+
+.nav-link.active {
+    font-family: RiskofRainSquare;
+    font-size: 16px;
+    color: #60635e;
+}
+
+.nav-link {
+    font-family: RiskofRainSquare;
 }
