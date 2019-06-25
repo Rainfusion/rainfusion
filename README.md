@@ -1,6 +1,11 @@
-# The Rainfusion Project - Server Sided Rendering
+<div align="center">
 
-Rainfusion is a website that hosts mods for the game [Risk of Rain](https://riskofraingame.com/ "Risk of Rain Website").
+  <h1>Rainfusion</h1>
+
+  <p>
+    <strong>A website that hosts mods for the game RoR1</strong>
+  </p>
+</div>
 
 ## Getting Started
 
@@ -12,6 +17,7 @@ You will need to have these installed before setting the environment up.
 
 ```
 NodeJS: Version 10 or above
+Rust: 1.30.0 or later with ``wasm-pack``
 ```
 
 ### Installing
@@ -29,12 +35,6 @@ To finally start the development env run:
 ```
 npm start
 ```
-
-***
-
-## Built With
-
-* [ReactJS](https://reactjs.org/ "ReactJS Website") - The web framework used
 
 ## Authors
 
