@@ -2,7 +2,6 @@
 //! CDN provided by the .env file in the root directory of this project.
 use futures::{future, Future};
 use js_sys::{Error, Promise};
-use std::env;
 use wasm_bindgen::{prelude::*, JsCast};
 use wasm_bindgen_futures::{future_to_promise, JsFuture};
 use web_sys::{Document, Request, RequestInit, RequestMode, Response, Window};
@@ -26,20 +25,36 @@ impl Rainfusion {
     /// Get rendered HTML from CDN
     pub fn rainfusion_html(
         &self,
+        filter: Option<&[String]>,
         ok_callback: Closure<FnMut(JsValue)>,
         err_callback: Closure<FnMut(JsValue)>,
     ) -> Result<(), JsValue> {
-        // Assert if variables are not in the environment.
-        assert!(env::var("CDN_IP").is_err());
-
         // Construct Request Options.
         let mut opts = RequestInit::new();
         opts.method("GET");
         opts.mode(RequestMode::Cors);
 
-        // Construct Request.
-        let request =
-            Request::new_with_str_and_init(&format!("{}/api/mods", env::var("CDN_IP").unwrap()), &opts)?;
+        // Check if we must filter the request.
+        // Then construct the request for fetching.
+        let request = match filter {
+            Some(f) => {
+                // Join the filter array.
+                let joined_filter = f.join(";");
+
+                // Convert the joined filter array into base64.
+                let encoded_filter = base64::encode(&joined_filter);
+
+                // Generate the request with the filtering added.
+                Request::new_with_str_and_init(
+                    &format!("{}/api/mods?sort={}", env!("CDN_IP"), encoded_filter),
+                    &opts,
+                )?
+            }
+            None => {
+                // Generate the request without filtering.
+                Request::new_with_str_and_init(&format!("{}/api/mods", env!("CDN_IP")), &opts)?
+            }
+        };
 
         // Fetch using the request.
         let request_promise = self.window.fetch_with_request(&request);
@@ -76,38 +91,29 @@ impl Rainfusion {
 
     /// Modify the Launcher
     pub fn rainfusion_launcher(&self) -> Result<(), JsValue> {
-        // Assert if variables are not in the environment.
-        assert!(env::var("CDN_IP").is_err());
-        assert!(env::var("SUBMIT_URL").is_err());
-        assert!(env::var("DOCS_URL").is_err());
-        assert!(env::var("UPDATE_URL").is_err());
-        assert!(env::var("DISCORD_URL").is_err());
-
         // Get Download Icon
         let launcher_download = self
             .document
             .get_element_by_id("launcher-download")
             .unwrap();
-        launcher_download.set_attribute(
-            "href",
-            &format!("{}/launcher-download", &env::var("CDN_IP").unwrap()),
-        )?;
+        launcher_download
+            .set_attribute("href", &format!("{}/launcher-download", env!("CDN_IP")))?;
 
         // Get Submit Icon
         let launcher_submit = self.document.get_element_by_id("launcher-submit").unwrap();
-        launcher_submit.set_attribute("href", &env::var("SUBMIT_URL").unwrap())?;
+        launcher_submit.set_attribute("href", env!("SUBMIT_URL"))?;
 
         // Get Docs Icon
         let launcher_docs = self.document.get_element_by_id("launcher-docs").unwrap();
-        launcher_docs.set_attribute("href", &env::var("DOCS_URL").unwrap())?;
+        launcher_docs.set_attribute("href", env!("DOCS_URL"))?;
 
         // Get Update Icon
         let launcher_update = self.document.get_element_by_id("launcher-update").unwrap();
-        launcher_update.set_attribute("href", &env::var("UPDATE_URL").unwrap())?;
+        launcher_update.set_attribute("href", env!("UPDATE_URL"))?;
 
         // Get Update Icon
         let launcher_discord = self.document.get_element_by_id("launcher-discord").unwrap();
-        launcher_discord.set_attribute("href", &env::var("DISCORD_URL").unwrap())?;
+        launcher_discord.set_attribute("href", env!("DISCORD_URL"))?;
 
         Ok(())
     }

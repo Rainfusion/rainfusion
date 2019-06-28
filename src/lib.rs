@@ -58,7 +58,7 @@ pub fn run() -> Result<(), JsValue> {
     mod_element.set_inner_html(r#"<h1 class="ror-font-square text-center"> Loading Mods </h1>"#);
 
     // Call for HTML from CDN
-    rainfusion.rainfusion_html(ok_mod_callback, err_mod_callback)?;
+    rainfusion.rainfusion_html(None, ok_mod_callback, err_mod_callback)?;
 
     Ok(())
 }
