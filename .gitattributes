@@ -1,0 +1,12 @@
+[attr]rust text eol=lf whitespace=tab-in-indent,trailing-space,tabwidth=4
+
+* text=auto eol=lf
+*.rs rust
+*.js rust
+*.css css
+*.html html
+
+*.ttf binary
+*.woff binary
+*.png binary
+*.ico binary
