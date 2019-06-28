@@ -3,8 +3,8 @@
 * text=auto eol=lf
 *.rs rust
 *.js rust
+*.html rust
 *.css css
-*.html html
 
 *.ttf binary
 *.woff binary
