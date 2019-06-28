@@ -3,8 +3,10 @@
   <img src="https://fustran.github.io/rainstash/items/vanilla_items/itemIcons/item_Infusion.png"/>
   <h1>Rainfusion</h1>
 
+  <strong>A website that hosts mods for the game RoR1</strong>
+
   <p>
-    <strong>A website that hosts mods for the game RoR1</strong>
+    <a href="https://travis-ci.com/Rainfusion/rainfusion"><img src="https://travis-ci.com/Rainfusion/rainfusion.svg?branch=master" alt="Build Status" /></a>
   </p>
 </div>
 
