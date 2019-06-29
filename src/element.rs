@@ -1,6 +1,6 @@
 //! Element Utility Functions
 use wasm_bindgen::{prelude::*, JsCast};
-use web_sys::{Event, EventTarget, HtmlInputElement, Node};
+use web_sys::{Event, HtmlInputElement};
 
 /// Wrapper for `web_sys::Element` to simplify calling different interfaces
 #[derive(Clone)]

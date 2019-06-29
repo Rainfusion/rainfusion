@@ -40,6 +40,7 @@ features = [
     'Response',
     'Event',
     'EventTarget',
+    'DomTokenList',
     'KeyboardEvent',
     'HtmlInputElement',
     'HtmlCollection',
