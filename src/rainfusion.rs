@@ -1,5 +1,6 @@
 //! This file provides functions to fetch data from the main Rainfusion
 //! CDN provided by the .env file in the root directory of this project.
+use crate::element::Element;
 use futures::{future, Future};
 use js_sys::{Error, Promise};
 use wasm_bindgen::{prelude::*, JsCast};
@@ -23,12 +24,7 @@ impl Rainfusion {
     }
 
     /// Get rendered HTML from CDN
-    pub fn rainfusion_html(
-        &self,
-        filter: Option<&[String]>,
-        ok_callback: Closure<FnMut(JsValue)>,
-        err_callback: Closure<FnMut(JsValue)>,
-    ) -> Result<(), JsValue> {
+    pub fn rainfusion_html(&self, filter: Option<&[String]>) -> Result<(), JsValue> {
         // Construct Request Options.
         let mut opts = RequestInit::new();
         opts.method("GET");
@@ -79,6 +75,10 @@ impl Rainfusion {
         // Convert the Rust future to a JS promise.
         let promise = future_to_promise(future);
 
+        // Generate callbacks.
+        let ok_callback = self.generate_success_callback();
+        let err_callback = self.generate_error_callback();
+
         // Handle Promise with callback.
         promise.then(&ok_callback).catch(&err_callback);
 
@@ -116,5 +116,23 @@ impl Rainfusion {
         launcher_discord.set_attribute("href", env!("DISCORD_URL"))?;
 
         Ok(())
+    }
+
+    /// Generate an successful callback for fetching.
+    pub fn generate_success_callback(&self) -> Closure<FnMut(JsValue)> {
+        Closure::wrap(Box::new(|x: JsValue| {
+            // Get mod element and set the inner to the JsValue.
+            let mut mod_element = Element::query("#mods-root").unwrap();
+            mod_element.set_inner_html(x.as_string().unwrap());
+        }) as Box<FnMut(JsValue)>)
+    }
+
+    /// Generate an error callback for fetching.
+    pub fn generate_error_callback(&self) -> Closure<FnMut(JsValue)> {
+        Closure::wrap(Box::new(|_: JsValue| {
+            // Get mod element and set the inner to the JsValue.
+            let mut mod_element = Element::query("#mods-root").unwrap();
+            mod_element.set_inner_html(r#"<h1 class="ror-font-square text-center"> Server Sided Rendering Failure (404) </h1>"#.to_string());
+        }) as Box<FnMut(JsValue)>)
     }
 }

@@ -38,6 +38,11 @@ features = [
     'RequestInit',
     'RequestMode',
     'Response',
+    'Event',
+    'EventTarget',
+    'KeyboardEvent',
+    'HtmlInputElement',
+    'HtmlCollection',
 ]
 
 [target."cfg(debug_assertions)".dependencies]
