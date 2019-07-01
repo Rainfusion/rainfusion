@@ -101,8 +101,9 @@ impl TagInput {
     /// Create a new tag input component.
     pub fn new() -> Self {
         // Create the input in the document.
-        let mut input_element = Element::create_element("input").unwrap();
+        let input_element = Element::create_element("input").unwrap();
         input_element.class_list_add("tags-input");
+        input_element.set_attribute("maxlength", "5");
 
         // Listen to "enter" events on the input box.
         let cloned_element = input_element.clone();
@@ -118,6 +119,14 @@ impl TagInput {
                         cloned_element.inner_ref().dyn_ref().unwrap();
                     let tag_value = html_input_element.value();
 
+                    // Transform the tag into lowercase.
+                    let mut lowercase_tag = tag_value.to_lowercase();
+
+                    // Cut the value short if it is over the tag max.
+                    if lowercase_tag.len() > 5 {
+                        lowercase_tag.truncate(5);
+                    }
+
                     // Clear the value inside the input.
                     html_input_element.set_value("");
 
@@ -125,7 +134,7 @@ impl TagInput {
                     let mut tags_container = Element::query("#tags-container").unwrap();
 
                     // Create a new tag with the value
-                    let mut tag = Tag::new(tag_value);
+                    let mut tag = Tag::new(lowercase_tag);
                     tag.mount(&mut tags_container);
                 }
                 _ => {}
@@ -159,7 +168,7 @@ impl Tag {
 
         // Create the inner elements.
         let mut tag_text = Element::create_element("span").unwrap();
-        let mut tag_removal = Element::create_element("a").unwrap();
+        let tag_removal = Element::create_element("a").unwrap();
 
         // Inner Tag Text
         tag_text.set_inner_html(tag);
@@ -171,7 +180,7 @@ impl Tag {
 
         // Listen to "click" events on the tag removal element.
         let cloned_element = tag_element.clone();
-        tag_removal.add_event_listener("click", move |event: Event| {
+        tag_removal.add_event_listener("click", move |_: Event| {
             // Remove the tag from the container.
             cloned_element.inner_ref().remove();
         });
@@ -201,7 +210,7 @@ impl SearchButton {
         let search_button = Element::query("#tags-submit").unwrap();
 
         // Create the event listener on the button.
-        search_button.add_event_listener("click", |event: Event| {
+        search_button.add_event_listener("click", |_: Event| {
             // Get the current tags as an array of strings.
             let tags = TagContainer::tags();
 

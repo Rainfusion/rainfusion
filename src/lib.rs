@@ -28,9 +28,6 @@ pub fn run() -> Result<(), JsValue> {
 
     // Setup Variables
     let window = web_sys::window().expect("Error finding window");
-    let document = window
-        .document()
-        .expect("Error finding document on the window");
 
     // Create Rainfusion Service
     let rainfusion = Rainfusion::new();

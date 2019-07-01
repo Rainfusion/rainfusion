@@ -73,6 +73,11 @@ impl Element {
         self.el.class_list().add_1(&value).unwrap();
     }
 
+    /// Set an attribute on the element.
+    pub fn set_attribute(&self, name: &str, value: &str) {
+        self.el.set_attribute(name, value).unwrap();
+    }
+
     /// Gets the value for the element in `self.el` (The element must be an input)
     pub fn value(&self) -> String {
         let el: HtmlInputElement = JsCast::dyn_ref::<web_sys::HtmlInputElement>(&self.el)
