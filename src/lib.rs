@@ -2,6 +2,7 @@
 //!
 //! The WASM frontend for the Rainfusion website.
 //! This website uses WASM to load server sided rendered objects.
+#![allow(dead_code)]
 
 /// Main Rainfusion Service
 mod rainfusion;
@@ -25,9 +26,6 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 pub fn run() -> Result<(), JsValue> {
     #[cfg(debug_assertions)]
     console_error_panic_hook::set_once();
-
-    // Setup Variables
-    let window = web_sys::window().expect("Error finding window");
 
     // Create Rainfusion Service
     let rainfusion = Rainfusion::new();
