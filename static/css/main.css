@@ -131,6 +131,60 @@ hr {
     margin-right: 5px;
 }
 
+/* Tags */
+
+.tags-container {
+    background-color: #222321;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    padding-left: 5px;
+    padding-top: 5px;
+    border-radius: 5px;
+}
+
+.tag-object {
+    background-color: #1B1C1A;
+    border-radius: 2px;
+    border: 1px solid #c7c7c7;
+    color: #fff;
+    display: inline-block;
+    /* font-family: 'Source Code Pro', monospace; */
+    font-family: RiskofRainSquare;
+    font-size: 13px;
+    font-weight: 200;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 5px;
+}
+
+.tag-object-remove {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tag-object-remove::before {
+    content: " ×";
+}
+
+.tags-input {
+    background-color: #333531;
+    border-radius: 3px;
+    border: 0;
+    color: white;
+    font-family: RiskofRainSquare;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    margin-top: 1px;
+    outline: none;
+    padding: 5px;
+    width: 95px;
+}
+
+.tags-input:focus {
+    background-color: #60635e;
+}
+
 /* Misc */
 
 .ror-hover {
