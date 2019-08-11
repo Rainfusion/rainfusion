@@ -5,13 +5,19 @@
  */
 
 @font-face {
-    font-family: RiskofRainSquare;
-    src: url(../fonts/RiskofRainSquare.ttf);
+    font-family: 'RiskofRainFont';
+    src: url('../fonts/RiskofRainFont.eot');
+    src: url('../fonts/RiskofRainFont.eot?#iefix') format('embedded-opentype'),
+            url('../fonts/RiskofRainFont.ttf') format('truetype'),
+            url('../fonts/RiskofRainFont.otf') format('opentype');
 }
 
 @font-face {
-    font-family: RiskofRainFont;
-    src: url(../fonts/RiskofRainFont.ttf);
+    font-family: 'RiskofRainSquare';
+    src: url('../fonts/RiskofRainSquare.eot');
+    src: url('../fonts/RiskofRainSquare.eot?#iefix') format('embedded-opentype'),
+            url('../fonts/RiskofRainSquare.ttf') format('truetype'),
+            url('../fonts/RiskofRainSquare.otf') format('opentype');
 }
 
 a, a:hover {
@@ -178,7 +184,7 @@ hr {
     margin-top: 1px;
     outline: none;
     padding: 5px;
-    width: 95px;
+    width: 80%;
 }
 
 .tags-input:focus {
