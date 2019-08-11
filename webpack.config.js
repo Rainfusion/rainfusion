@@ -23,7 +23,8 @@ module.exports = {
 
         new WasmPackPlugin({
             crateDirectory: __dirname,
-            extraArgs: "--no-typescript --out-name index"
+            outName: "index",
+            extraArgs: "--no-typescript"
         }),
     ]
 };
