@@ -103,7 +103,6 @@ impl TagInput {
         // Create the input in the document.
         let input_element = Element::create_element("input").unwrap();
         input_element.class_list_add("tags-input");
-        input_element.set_attribute("maxlength", "5");
 
         // Listen to "enter" events on the input box.
         let cloned_element = input_element.clone();
@@ -119,23 +118,29 @@ impl TagInput {
                         cloned_element.inner_ref().dyn_ref().unwrap();
                     let tag_value = html_input_element.value();
 
-                    // Transform the tag into lowercase.
-                    let mut lowercase_tag = tag_value.to_lowercase();
+                    // Split whitespace from tag.
+                    let whitespace_split = tag_value.trim();
 
-                    // Cut the value short if it is over the tag max.
-                    if lowercase_tag.len() > 5 {
-                        lowercase_tag.truncate(5);
+                    // Check trimmed whitespace.
+                    if !whitespace_split.is_empty() {
+                        // Transform the tag into lowercase.
+                        let mut lowercase_tag = whitespace_split.to_lowercase();
+
+                        // Cut the value short if it is over the tag max.
+                        if lowercase_tag.len() > 20 {
+                            lowercase_tag.truncate(20);
+                        }
+
+                        // Clear the value inside the input.
+                        html_input_element.set_value("");
+
+                        // Get the inner tags container element.
+                        let mut tags_container = Element::query("#tags-container").unwrap();
+
+                        // Create a new tag with the value
+                        let mut tag = Tag::new(lowercase_tag);
+                        tag.mount(&mut tags_container);
                     }
-
-                    // Clear the value inside the input.
-                    html_input_element.set_value("");
-
-                    // Get the inner tags container element.
-                    let mut tags_container = Element::query("#tags-container").unwrap();
-
-                    // Create a new tag with the value
-                    let mut tag = Tag::new(lowercase_tag);
-                    tag.mount(&mut tags_container);
                 }
                 _ => {}
             }
