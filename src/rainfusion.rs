@@ -90,6 +90,7 @@ impl Rainfusion {
     }
 
     /// Get rendered Launcher HTML from CDN
+    #[cfg(not(feature = "compat"))]
     pub fn rainfusion_launcher(&self) -> Result<(), JsValue> {
         // Construct Request Options.
         let mut opts = RequestInit::new();

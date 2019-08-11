@@ -31,6 +31,7 @@ pub fn run() -> Result<(), JsValue> {
     let rainfusion = Rainfusion::new();
 
     // Modify Launcher
+    #[cfg(not(feature = "compat"))]
     rainfusion.rainfusion_launcher()?;
 
     // Mod Loading Text
