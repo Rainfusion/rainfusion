@@ -6,6 +6,7 @@ dist
 # Misc
 .env
 .vscode
+.idea
 
 # Rust
 pkg

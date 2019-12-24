@@ -53,3 +53,7 @@ Licenses for the fonts used can be found in their corresponding directories in t
 
 * Saturnyoshi for creating RoR Modloader and helping out with aesthetics.
 * Uziskull and Saturnyoshi for creating the icons for the information launcher.
+
+Thanks to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to test in real browsers!
+
+[<img src="https://live.browserstack.com/images/opensource/browserstack-logo.svg" height="50" width="228" alt="Cross-browsers testing thanks to BrowserStack"/>](https://www.browserstack.com/)

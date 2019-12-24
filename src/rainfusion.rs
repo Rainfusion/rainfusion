@@ -1,31 +1,44 @@
 //! This file provides functions to fetch data from the main Rainfusion
 //! CDN provided by the .env file in the root directory of this project.
 use crate::element::Element;
-use futures::{future, Future};
-use js_sys::{Error, Promise};
 use wasm_bindgen::{prelude::*, JsCast};
-use wasm_bindgen_futures::{future_to_promise, JsFuture};
-use web_sys::{Document, Request, RequestInit, RequestMode, Response, Window};
+use wasm_bindgen_futures::JsFuture;
+use web_sys::{Request, RequestInit, RequestMode, Response};
 
 /// Main Rainfusion Service
-pub struct Rainfusion {
-    pub window: Window,
-    pub document: Document,
-}
+pub struct Rainfusion;
 
 /// Implementation of the Rainfusion service.
 impl Rainfusion {
-    /// Create a new Rainfusion service.
-    pub fn new() -> Self {
+    /// Fetch and handle errors and success with the given request.
+    pub async fn fetch_request(request: Request, id: &'static str) -> Result<(), JsValue> {
+        // Fetch using the built request.
         let window = web_sys::window().unwrap();
-        let document = window.document().unwrap();
+        let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
 
-        Self { window, document }
+        // `resp_value` is a `Response` object.
+        assert!(resp_value.is_instance_of::<Response>());
+        let resp: Response = resp_value.dyn_into().unwrap();
+
+        // Check if the response was a success or not.
+        if resp.ok() {
+            // Convert this other `Promise` into a rust `Future`.
+            let text = JsFuture::from(resp.text()?).await?;
+
+            // Convert the JsValue into a string and set it as the body.
+            let body = text.as_string().unwrap();
+            Self::set_success(id, body);
+        } else {
+            // We must end the execution here since the request failed.
+            Self::set_error(id);
+        }
+
+        Ok(())
     }
 
     /// Get rendered Mod HTML from CDN
-    pub fn rainfusion_html(&self, filter: Option<&[String]>) -> Result<(), JsValue> {
-        // Construct Request Options.
+    pub async fn rainfusion_html(filter: Option<&[String]>) -> Result<(), JsValue> {
+        // Generate request options.
         let mut opts = RequestInit::new();
         opts.method("GET");
         opts.mode(RequestMode::Cors);
@@ -40,7 +53,7 @@ impl Rainfusion {
                 // Convert the joined filter array into base64.
                 let encoded_filter = base64::encode(&joined_filter);
 
-                // Generate the request with the filtering added.
+                // Form the request using the base64 filter string.
                 Request::new_with_str_and_init(
                     &format!("{}/api/mods?sort={}", env!("CDN_IP"), encoded_filter),
                     &opts,
@@ -52,107 +65,37 @@ impl Rainfusion {
             }
         };
 
-        // Fetch using the request.
-        let request_promise = self.window.fetch_with_request(&request);
-
-        // Convert and Handle the future.
-        let future = JsFuture::from(request_promise)
-            .and_then(|resv| {
-                // Convert into a response and grab text.
-                let res: Response = resv.dyn_into()?;
-                res.text()
-            })
-            .and_then(|textv: Promise| JsFuture::from(textv))
-            .and_then(|text| {
-                // Decode the response
-                future::ok(text)
-            })
-            .map_err(|err| {
-                let js_error = Error::new(&format!("{:?}", err));
-                JsValue::from(js_error)
-            });
-
-        // Convert the Rust future to a JS promise.
-        let promise = future_to_promise(future);
-
-        // Generate callbacks.
-        let ok_callback = self.generate_success_callback("#mods-root");
-        let err_callback = self.generate_error_callback("#mods-root");
-
-        // Handle Promise with callback.
-        promise.then(&ok_callback).catch(&err_callback);
-
-        // Forget the callbacks.
-        ok_callback.forget();
-        err_callback.forget();
-
-        Ok(())
+        // Fetch using the built request.
+        Ok(Self::fetch_request(request, "#mods-root").await?)
     }
 
     /// Get rendered Launcher HTML from CDN
     #[cfg(not(feature = "compat"))]
-    pub fn rainfusion_launcher(&self) -> Result<(), JsValue> {
-        // Construct Request Options.
+    pub async fn rainfusion_launcher() -> Result<(), JsValue> {
+        // Generate request options.
         let mut opts = RequestInit::new();
         opts.method("GET");
         opts.mode(RequestMode::Cors);
 
-        // Generate the request for the launcher.
+        // Build the request from options.
         let request =
             Request::new_with_str_and_init(&format!("{}/api/launcher", env!("CDN_IP")), &opts)?;
 
-        // Fetch using the request.
-        let request_promise = self.window.fetch_with_request(&request);
-
-        // Convert and Handle the future.
-        let future = JsFuture::from(request_promise)
-            .and_then(|resv| {
-                // Convert into a response and grab text.
-                let res: Response = resv.dyn_into()?;
-                res.text()
-            })
-            .and_then(|textv: Promise| JsFuture::from(textv))
-            .and_then(|text| {
-                // Decode the response
-                future::ok(text)
-            })
-            .map_err(|err| {
-                let js_error = Error::new(&format!("{:?}", err));
-                JsValue::from(js_error)
-            });
-
-        // Convert the Rust future to a JS promise.
-        let promise = future_to_promise(future);
-
-        // Generate callbacks.
-        let ok_callback = self.generate_success_callback("#launcher-root");
-        let err_callback = self.generate_error_callback("#launcher-root");
-
-        // Handle Promise with callback.
-        promise.then(&ok_callback).catch(&err_callback);
-
-        // Forget the callbacks.
-        ok_callback.forget();
-        err_callback.forget();
-
-        Ok(())
+        // Fetch using the built request.
+        Ok(Self::fetch_request(request, "#launcher-root").await?)
     }
 
     /// Generate an successful callback for fetching.
-    pub fn generate_success_callback(&self, element_id: &'static str) -> Closure<FnMut(JsValue)> {
-        Closure::wrap(Box::new(move |x: JsValue| {
-            // Get the element and set the inner to the JsValue.
-            let mut element = Element::query(element_id).unwrap();
-            element.set_inner_html(x.as_string().unwrap());
-        }) as Box<FnMut(JsValue)>)
+    pub fn set_success(element_id: &'static str, body: String) {
+        // Get the element and set the inner to the JsValue.
+        let mut element = Element::query(element_id).unwrap();
+        element.set_inner_html(body);
     }
 
     /// Generate an error callback for fetching.
-    pub fn generate_error_callback(&self, element_id: &'static str) -> Closure<FnMut(JsValue)> {
-        Closure::wrap(Box::new(move |_: JsValue| {
-            // Get the element and set the inner to the JsValue.
-            let mut element = Element::query(element_id).unwrap();
-            element.set_inner_html(r#"<h1 class="ror-font-square text-center"> Server Sided Rendering Failure (404) </h1>"#.to_string());
-        }) as Box<FnMut(JsValue)>)
+    pub fn set_error(element_id: &'static str) {
+        // Get the element and set the inner to the JsValue.
+        let mut element = Element::query(element_id).unwrap();
+        element.set_inner_html(r#"<h1 class="ror-font-square text-center"> Server Sided Rendering Failure (404) </h1>"#.to_string());
     }
 }

@@ -2,7 +2,13 @@
 //! on the Rainfusion website.
 use crate::{Element, Rainfusion};
 use wasm_bindgen::JsCast;
+use wasm_bindgen_futures::spawn_local;
 use web_sys::{Event, HtmlInputElement, KeyboardEvent};
+
+/// Loading Mods HTML
+static LOADING_MODS: &str = r#"<h1 class="ror-font-square text-center"> Loading Mods </h1>"#;
+/// Loading Filter HTML
+static LOADING_FILTER: &str = r#"<h1 class="ror-font-square text-center"> Loading Filter </h1>"#;
 
 /// Main Tag Component
 pub struct TagComponent {
@@ -216,44 +222,36 @@ impl SearchButton {
 
         // Create the event listener on the button.
         search_button.add_event_listener("click", |_: Event| {
-            // Get the current tags as an array of strings.
-            let tags = TagContainer::tags();
+            // Make the inner function async.
+            spawn_local(async {
+                // Get the current tags as an array of strings.
+                let tags = TagContainer::tags();
 
-            // Create a new Rainfusion service.
-            let rainfusion = Rainfusion::new();
+                // Get mod html element.
+                let mut mods_element = Element::query("#mods-root").unwrap();
 
-            // Get mod html element.
-            let mut mods_element = Element::query("#mods-root").unwrap();
-
-            // If the tags object is empty and the mods element is also empty.
-            // Fetch unfiltered content or else fetch filtered content.
-            if tags.is_empty() && mods_element.inner_html().is_empty() {
-                // Fetch unfiltered content.
-                mods_element.set_inner_html(
-                    r#"<h1 class="ror-font-square text-center"> Loading Mods </h1>"#.to_string(),
-                );
-                rainfusion.rainfusion_html(None).unwrap();
-            } else if !tags.is_empty() && mods_element.inner_html().is_empty() {
-                // Fetch filtered content.
-                mods_element.set_inner_html("".into());
-                mods_element.set_inner_html(
-                    r#"<h1 class="ror-font-square text-center"> Loading Filter </h1>"#.to_string(),
-                );
-                rainfusion.rainfusion_html(Some(&tags)).unwrap();
-            } else if tags.is_empty() && !mods_element.inner_html().is_empty() {
-                // Fetch unfiltered content.
-                mods_element.set_inner_html(
-                    r#"<h1 class="ror-font-square text-center"> Loading Mods </h1>"#.to_string(),
-                );
-                rainfusion.rainfusion_html(None).unwrap();
-            } else if !tags.is_empty() && !mods_element.inner_html().is_empty() {
-                // Fetch filtered content.
-                mods_element.set_inner_html("".into());
-                mods_element.set_inner_html(
-                    r#"<h1 class="ror-font-square text-center"> Loading Filter </h1>"#.to_string(),
-                );
-                rainfusion.rainfusion_html(Some(&tags)).unwrap();
-            }
+                // If the tags object is empty and the mods element is also empty.
+                // Fetch unfiltered content or else fetch filtered content.
+                if tags.is_empty() && mods_element.inner_html().is_empty() {
+                    // Fetch unfiltered content.
+                    mods_element.set_inner_html(LOADING_MODS.to_string());
+                    Rainfusion::rainfusion_html(None).await.unwrap();
+                } else if !tags.is_empty() && mods_element.inner_html().is_empty() {
+                    // Fetch filtered content.
+                    mods_element.set_inner_html("".into());
+                    mods_element.set_inner_html(LOADING_FILTER.to_string());
+                    Rainfusion::rainfusion_html(Some(&tags)).await.unwrap();
+                } else if tags.is_empty() && !mods_element.inner_html().is_empty() {
+                    // Fetch unfiltered content.
+                    mods_element.set_inner_html(LOADING_MODS.to_string());
+                    Rainfusion::rainfusion_html(None).await.unwrap();
+                } else if !tags.is_empty() && !mods_element.inner_html().is_empty() {
+                    // Fetch filtered content.
+                    mods_element.set_inner_html("".into());
+                    mods_element.set_inner_html(LOADING_FILTER.to_string());
+                    Rainfusion::rainfusion_html(Some(&tags)).await.unwrap();
+                }
+            });
         });
 
         Self {}

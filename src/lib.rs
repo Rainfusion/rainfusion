@@ -23,16 +23,13 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen(start)]
-pub fn run() -> Result<(), JsValue> {
+pub async fn run() -> Result<(), JsValue> {
     #[cfg(debug_assertions)]
-    console_error_panic_hook::set_once();
-
-    // Create Rainfusion Service
-    let rainfusion = Rainfusion::new();
+        console_error_panic_hook::set_once();
 
     // Modify Launcher
     #[cfg(not(feature = "compat"))]
-    rainfusion.rainfusion_launcher()?;
+        Rainfusion::rainfusion_launcher().await?;
 
     // Mod Loading Text
     let mut mod_element = Element::query("#mods-root").unwrap();
@@ -40,7 +37,7 @@ pub fn run() -> Result<(), JsValue> {
         .set_inner_html(r#"<h1 class="ror-font-square text-center"> Loading Mods </h1>"#.into());
 
     // Call for HTML from CDN
-    rainfusion.rainfusion_html(None)?;
+    Rainfusion::rainfusion_html(None).await?;
 
     // Create Tags Component
     let mut tags_component = TagComponent::new();
