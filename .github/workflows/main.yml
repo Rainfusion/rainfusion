@@ -4,11 +4,17 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
+      
+    - name: Install rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+        override: true
     
     - name: Install
       run: npm install
@@ -17,9 +23,26 @@ jobs:
       run: npm run build
       env:
         CDN_IP: ${{ secrets.CDN_IP }}
+  
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
       
+    - name: Install rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+        override: true
+    
+    - name: Install
+      run: npm install
+    
     - name: Run tests
-      run: npmnpm run test
+      run: npm run test
       env:
         BS_USERNAME: ${{ secrets.BS_USERNAME }}
         BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
+        
