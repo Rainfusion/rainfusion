@@ -46,6 +46,7 @@ jobs:
     - name: Run tests
       run: npm run test
       env:
+        CDN_IP: ${{ secrets.CDN_IP }}
         BS_USERNAME: ${{ secrets.BS_USERNAME }}
         BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
         
