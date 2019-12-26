@@ -16,6 +16,9 @@ jobs:
         profile: minimal
         override: true
     
+    - name: Install wasm-pack
+      run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh -s -- -f
+        
     - name: Install
       run: npm install
     
