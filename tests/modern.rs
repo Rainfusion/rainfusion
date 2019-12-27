@@ -84,7 +84,7 @@ async fn test_firefox_latest() -> Result<(), Box<dyn Error>> {
 #[tokio::test]
 async fn test_edge_latest() -> Result<(), Box<dyn Error>> {
     // Run the test using Edge as the browser.
-    let result = run_test("Edge", "18.0", "Windows", "10").await?;
+    let result = run_test("Edge", "79.0 beta", "Windows", "10").await?;
 
     // This assert fails the test if the browser fails the test.
     Ok(assert_eq!(result, true))
