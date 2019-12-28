@@ -1,6 +1,6 @@
 //! Webdriver testing to make sure the website is rendering correctly on
 //! modern browsers such as Firefox or Chrome.
-//! We test Firefox, Chrome, Edge and Safari since they are the most popular.
+//! We test Firefox, Chrome and Safari since they are the most popular.
 
 use fantoccini::{Client, Locator};
 use serde_json::json;
@@ -75,16 +75,6 @@ async fn test_chrome_latest() -> Result<(), Box<dyn Error>> {
 async fn test_firefox_latest() -> Result<(), Box<dyn Error>> {
     // Run the test using Firefox as the browser.
     let result = run_test("Firefox", "71.0", "Windows", "10").await?;
-
-    // This assert fails the test if the browser fails the test.
-    Ok(assert_eq!(result, true))
-}
-
-/// Latest Edge Test
-#[tokio::test]
-async fn test_edge_latest() -> Result<(), Box<dyn Error>> {
-    // Run the test using Edge as the browser.
-    let result = run_test("Edge", "79.0 beta", "Windows", "10").await?;
 
     // This assert fails the test if the browser fails the test.
     Ok(assert_eq!(result, true))
