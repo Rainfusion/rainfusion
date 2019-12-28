@@ -25,11 +25,11 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 #[wasm_bindgen(start)]
 pub async fn run() -> Result<(), JsValue> {
     #[cfg(debug_assertions)]
-        console_error_panic_hook::set_once();
+    console_error_panic_hook::set_once();
 
     // Modify Launcher
     #[cfg(not(feature = "compat"))]
-        Rainfusion::rainfusion_launcher().await?;
+    Rainfusion::rainfusion_launcher().await?;
 
     // Mod Loading Text
     let mut mod_element = Element::query("#mods-root").unwrap();
